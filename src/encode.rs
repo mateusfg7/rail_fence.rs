@@ -1,24 +1,21 @@
 pub fn encode(secret: String, trails_number: usize) -> String {
     let mut trails: Vec<Vec<char>> = vec![];
-    let mut i = 0;
-    loop {
+
+    (0..trails_number).for_each(|i| {
         if i < trails_number {
-            trails.push(vec![]);
-            i += 1;
-        } else {
-            break;
+            trails.push(vec![])
         }
-    }
+    });
 
     let mut curr_trail = 0;
-    for letter in secret.chars() {
-        trails[curr_trail].push(letter);
+    secret.chars().for_each(|ch| {
+        trails[curr_trail].push(ch);
         curr_trail = if curr_trail < trails_number - 1 {
             curr_trail + 1
         } else {
             0
         };
-    }
+    });
 
     let mut encoded_secret = String::new();
 
