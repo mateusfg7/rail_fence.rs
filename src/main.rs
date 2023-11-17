@@ -1,25 +1,14 @@
+mod cli;
 mod encode;
-use encode::encode;
 
 use clap::Parser;
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long)]
-    secret: String,
-
-    #[arg(short, long)]
-    trails: usize,
-}
+use cli::CLI;
+use encode::encode;
 
 fn main() {
-    let args = Args::parse();
+    let args = CLI::parse();
 
-    let secret = args.secret;
-    let trails_count = args.trails;
+    let encoded = encode(args.message.clone(), args.trails);
 
-    let encoded = encode(secret.clone(), trails_count);
-
-    println!("secret : {secret}\nencoded: {encoded}")
+    println!("secret : {0}\nencoded: {encoded}", args.message)
 }

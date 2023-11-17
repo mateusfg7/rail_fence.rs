@@ -121,7 +121,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rail_fence"
+name = "rail_fence_cipher"
 version = "0.1.0"
 dependencies = [
  "clap",
