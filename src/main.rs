@@ -20,17 +20,19 @@ fn encode(secret: String, trails_number: usize) -> String {
         };
     }
 
-    let mut crypt_secret = String::new();
+    let mut encoded_secret = String::new();
 
-    trails
-        .iter()
-        .for_each(|trail| trail.iter().for_each(|c| crypt_secret.push(*c)));
+    trails.iter().for_each(|trail| {
+        trail.iter().for_each(|c: &char| {
+            encoded_secret.push(*c);
+        });
+    });
 
-    crypt_secret.to_uppercase()
+    encoded_secret.to_uppercase()
 }
 
 fn main() {
-    let secret = String::from("mateus felipe");
+    let secret = String::from("Mateus Felipe");
     let trails_number = 2;
 
     let encoded = encode(secret, trails_number);
