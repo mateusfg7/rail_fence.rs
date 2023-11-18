@@ -1,3 +1,8 @@
+enum State {
+    Forwards,
+    Backwards,
+}
+
 pub fn encode(secret: String, trails_number: usize) -> String {
     let mut trails: Vec<Vec<char>> = vec![];
 
@@ -7,14 +12,31 @@ pub fn encode(secret: String, trails_number: usize) -> String {
         }
     });
 
+    let filtered_secret = secret.replace(" ", "");
+
     let mut curr_trail = 0;
-    secret.chars().for_each(|ch| {
+    let mut state = State::Forwards;
+    filtered_secret.chars().for_each(|ch| {
         trails[curr_trail].push(ch);
-        curr_trail = if curr_trail < trails_number - 1 {
-            curr_trail + 1
-        } else {
-            0
-        };
+
+        curr_trail = match state {
+            State::Forwards => {
+                if curr_trail < trails_number - 1 {
+                    curr_trail + 1
+                } else {
+                    state = State::Backwards;
+                    curr_trail - 1
+                }
+            }
+            State::Backwards => {
+                if curr_trail > 0 {
+                    curr_trail - 1
+                } else {
+                    state = State::Forwards;
+                    curr_trail + 1
+                }
+            }
+        }
     });
 
     let mut encoded_secret = String::new();
